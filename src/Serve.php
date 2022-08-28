@@ -50,5 +50,6 @@ class Serve
             );
     }
 }
-require_once __DIR__ . '/Helpers/Config.php';
-var_dump(Config::get('database.connections.mysql'));
+require 'vendor/autoload.php';
+Config::set('databases', ['mysql' => ['driver' => 'mysql']]);
+var_dump(Config::get('databases'));
