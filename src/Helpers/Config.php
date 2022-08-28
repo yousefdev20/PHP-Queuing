@@ -2,24 +2,17 @@
 
 namespace Yousef\QueuingSystem\Helpers;
 
-use Couchbase\IndexNotFoundException;
-
 class Config
 {
-    static function get(string $config): string|array
+    private static array $config = [];
+
+    static function get(string $key): string|array
     {
-        try {
-        $keys = explode('.', $config);
-        $configurations = include __DIR__ . '/../../config/' . $keys[0] . '.php';
-        unset($keys[0]);
-        $index = '';
-        foreach ($keys ?? [] as $key) {
-            $index .= "['" . $key . "']";
-        }
-            $expected = $configurations['connection'];
-        }catch (\Exception $ex) {
-            echo "index [" . '$index' . "] not found";
-        }
-        return $expected;
+        return self::$config[$key];
+    }
+
+    static function set(string $key, array|string|null $value): void
+    {
+        self::$config[$key] = $value;
     }
 }
